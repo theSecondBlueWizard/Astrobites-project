@@ -1,0 +1,29 @@
+\section{Numerical Methods}
+Solving the Kepler's equation therefore requires numerical methods.
+
+A significant amount of problems aren't two-body problems. Therefore a lot of the assumptions made by Kepler's laws don't hold. The very solar system he used to discover his laws perpetuates from them.
+
+Typically, depending on problem configuration, these perturbations are mostly gravitational from for instance heavy planets affecting each other. The problem of orbital modelling then boils down to Newton's second law, where for each body
+\[
+    \frac{d^2\vec r}{dt^2} = \frac1m \sum \vec F.
+\]
+Here, $F$ is typically gravitational forces. These are considered Newtonian, and perturbations due to general relativity are typically accounted for using post-Newtonian approximations significantly outside the scope of this paper, but are summarized in \cite{Phillipp_2018}. This will be returned to later.
+
+Unfortunately there are a lot of numerical methods than can be covered, and none are ideal for all situations. In this paper we consider two different kinds of solutions:
+
+\subsection{Direct solutions}
+As the problem is an ODE, one solution can be based off of Runge-Kutta methods. One such method is described in \cite{Everhart_1985}, and refined in \cite{Rein_2014}. It is a 15-th order Runge-Kutta, as that tends to contain the same magnitude of error as an IEEE-754 double precision float's mantissa, that is roughly \[
+    2^{-52} \approx 2\cdot10^{-16}
+\]
+(\cite{IEEE-754}).
+
+This kind of solution is good for generic N-body problems where all bodies can affect each other equally. This quickly leads to chaotic systems, a concept outside of the scope of this paper. To avoid issues, convergence tests were performed as advised by \cite{Rein_2014}. Another benefit of using methods such as these is as with other Runge-Kutta-based methods, that step length can be dynamic without much loss of accuracy.
+
+\subsection{Keplerian solutions}
+Another set of integrator methods are based on the body's energies rather than forces acting upon them. \cite{Wisdom_1991} have a method based on energy-conservation. In short, they break the total Hamiltonian into
+\[
+    H = H_{Kepler} + H_{Orbit} + H_{Resonant} + H_{Secular},
+\]
+where $H_{Kepler}$ is the one predicted by Keplerian mechanics, $H_{Orbit}$ and $H_{Resonant}$ are the gravitational perturbations by other bodies (the non-resonant and the resonant ones), and $H_{Secular}$ are perturbations not based on positions. Of course this can be simplified for particular problems, and this is useful for studying other phenomena across physics.
+
+For instance, we can use a modified version from \cite{Rein_2015} which they titled WHFAST to see the effects of General Relativity on the orbit of Mercury, as done below:

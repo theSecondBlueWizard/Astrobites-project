@@ -1,0 +1,44 @@
+\section{Effects of General Relativity on Mercury's orbit}
+Mercury's orbit is typically cited as evidence of GR's accuracy, as it predicts that its periapsis will rotate with time. \textbf{Appendix \ref{appendix: mercury}} shows an example script for how data was collected.
+
+A library called REBOUND (\cite{Rein_2012}) was used for the rest of this paper, along with an extension for relativistic gravity described in \cite{Tamayo_2019}. It is an open-source python package written in C managed by Hanno Rein. The thirty-something C-files are a few thousand lines long, and thus outside of the scope of this paper, however it is very well documented, and managed by an astrophysics professor, therefore a pretty good resource to see the concepts involved.
+
+REBOUND has neat NASA JPL Horizons integration where the sun's and mercury's coordinates, velocities, Keplerian elements and all can be extracted from (\cite{Giorgini_1996}). Only the Sun and Mercury were used, to completely isolate the system from other perturbations.
+
+\begin{figure}[h]
+    \centering
+    \includesvg[width=1\linewidth]{Images/mercury_GR}
+    \caption{Mercury's modelled perturbation due to general relativity, and lack thereof without. Minutes, without the 288 degrees.}
+    \label{fig: mercury GR}
+\end{figure}
+
+And indeed, in \textbf{figure \ref{fig: mercury GR}} we observe how the Keplerian orbit maintains a constant argument of periapsis, while the simulation accounting for general relativity precesses constantly.
+
+ What's fun is to see that while a commonly accepted value is  43.03 arcseconds of precession per century (\cite{Clemence_1949}), is remarkably similar to the observed motion. Slight modification to the script to run for a century gets a value of 42.88 arcseconds (both at $dt = 10^{-4}$ as well as $dt = 10^{-5}$ to serve as a minor convergence study). The error may stem from modern measurements of the state of Mercury being more accurate than those in 1949, or the state of Mercury itself being different from the 19th century used in the comparison in the cited paper. Of course the author of this astro-bite may also be missing some knowledge to explain their error.
+ 
+This same test can be tried for the individual perturbation sources to be compared to \textbf{table 2} in \cite[p.~536]{Clemence_1949}:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c||c|c}
+         Cause & \multicolumn{2}{c}{$\Delta \omega_{Me}$ per century} \\
+         \hline
+         & \cite{Clemence_1949} & WHFAST    \\
+         \hline\hline
+        Mercury & $0.025"$ & $-7\cdot 10^{-6}"$   \\
+        Venus & $277.86"$ & $282.87"$ \\
+        Earth & $90.04"$ & $90.26"$   \\  
+        Mars & $2.54"$ & $2.44"$\\
+        Jupiter & $153.58"$ & $143.56"$   \\
+        Relativistic Effect & $43.03"$ & $42.88"$ \\
+    \end{tabular}
+    \caption{Comparison of estimated values of Mercury's perihelion percession by a real astronomer a century ago, and a student using WHFAST over an afternoon}
+    \label{table: Simulated perihilion pertubations}
+\end{table}
+The simulated values have been convergence tested, and been confirmed accurate to much more than the given number of significant figures. This shows a significant error in the method, and implies there are in fact effects the author of the astro-bite isn't quite accounting for. However, at the same time, this is modelled over a century of perturbations on the fastest and the lightest planet in the solar system. Errors of at most ten arcseconds of its orbit amount to an arc of about three thousand kilometres:
+The simulated values have been convergence tested, and been confirmed accurate to much more than the given number of significant figures. This shows a significant error in the method, and implies there are in fact phenomena that remain unaccounted for. However, at the same time, this is modelled over a century of perturbations on the fastest and the lightest planet in the solar system. Errors of at most ten arcseconds of its orbit amount to an arc of about three thousand kilometres:
+\begin{multline*}
+    10'' \times \left\{69.82 \cdot 10^{6} [\textrm{km}]\right\}_{\textrm{Mercury's apohelion}}
+    \\ \approx 3.3 \cdot 10^3 \textrm{km}
+\end{multline*}
+ This is just over a radii and a half of the planet Mercury itself, an error built by a full century of orbits. This is also a worst-case estimate, as Mercury is surprisingly eccentric with a periapsis of $46$ million km. An arcsecond is simply not that big of a unit.

@@ -1,0 +1,69 @@
+\section{The Keplerian Elements}
+We are familiar with Johannes Kepler from his three laws from FY1001. His contribution to astrophysics were however much more substantial. Let us briefly summarize his elements that describe everything needed to bind an object to a predictable orbit.
+
+\subsection{Orbital form}
+From Kepler's first law we have that planets in the solar system trace out ellipses, and the sun is at a focus of each of these (\cite{Kepler_1609}).
+
+In geometry we typically see a semi-major axis $a$ and a semi-minor axis $b$. In astronomy we define the furthest distance from the parent body as the apoapsis $r_a$, and the closest as the periapsis $r_p$, and use an eccentricity $e$ equivalent to
+\[
+    e = \sqrt{1 - b^2/a^2} = \frac{r_a - r_p}{r_a + r_p}.
+\]
+Any two of the variables above bind the orbit fully. Typically $a$ and $e$ are presented.
+
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (focus) at (-0.85, -0.5);
+        \coordinate (origo) at (0, 0);
+        \coordinate (anode) at (2.5, -0.5);
+    
+        \draw [rotate = 30](0,0) ellipse (1.5cm and 0.5cm);
+        \draw [rotate = 30](0,0) -- (1.5,0) node[right, right]{$a$};
+        \draw [rotate = 30](0,0) -- (0,0.5) node[above]{$b$};
+        \draw [rotate = 30, dotted, line width = 0.5mm] (-1,0) -- (1.5,0) node[right, above]{$r_a$};
+        \draw [rotate = 30, dashed, line width = 0.5mm] (-1.5,0)node[left]{$r_p$} -- (-1,0);
+        \draw [-stealth, dotted] (focus) -- (anode) node[midway, below] {Asc. node};
+        \filldraw[black] (focus) circle (2pt);
+        \pic [draw, ->, "$\omega$", angle eccentricity = 1.5] {angle = anode--focus--origo};
+    \end{tikzpicture}
+    \caption{Top-down view of orbital plane}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Orientation}
+For three dimensions three angles are needed. The easiest is inclination $i$, between a body's orbital plane and a reference plane. For planets this is the plane of the ecliptic, Earth's orbital plane. Otherwise, the parent body's equator may be used. This can become somewhat ambiguous for bodies with no solid surface, in the case of which their magnetic fields are used (which is how a Jupiter day is defined).
+
+Then the Longitude of the Ascending Node $\Omega$ is considered. This is the angle from a reference direction to the ascending node, the point at which the body rises above the orbital plane (by right hand rule). The reference direction is typically earth's position during vernal equinox (the point in March when day is as long as night), but is entirely arbitrary.
+
+Finally the argument of periapsis $\omega$ is the angle between the ascending node and periapsis in the orbital plane.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (focus) at (-0.85, 0.5);
+        \coordinate (origo) at (0, 0);
+        \coordinate (anode) at (0, 1);
+    
+        \draw [rotate = -30](0,0) ellipse (1.5cm and 0.5cm);
+        \draw [dotted](0,0.5) ellipse (1.3cm and 0.5cm);
+        \draw [-stealth, rotate = -30, dashed] (-1,0) -- (1.5,0) node(orbit){} node[right]{Orbital plane};
+        \draw [stealth-, rotate = -30, dashed] (-2,0) node(peri) {} node [left]{$r_p$} -- (-1,0);
+        \draw [-stealth, dotted] (focus) -- (anode) node[above, right] {Asc. node};
+        \draw [-stealth, dotted] (focus) -- (1.3, 0.5) node (flat){} node[right] {Referene plane};
+        \filldraw[black] (focus) circle (2pt);
+        \pic [draw, ->, "$\Omega$", angle eccentricity = 1.5] {angle = anode--focus--peri};
+        \pic [draw, <-, "$i$", angle eccentricity = 1.5] {angle = orbit--focus--flat};
+    \end{tikzpicture}
+    \caption{View of orbit and a reference plane}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Position in Time and Space}
+There are multiple ways of defining a planet's position in its orbit. One is by time. Mean anomaly $M$ is a non-physical angle we pretend grows linearly with time from $0$ to $2\pi$, until resetting to $0$ at the periapsis. Another is by position. Eccentric anomaly $E$ is the physical angle from periapsis to planet with the vertex at the centre of the ellipse, and True anomaly $f$ is the same but with the vertex at the star, a focus of the ellipse.
+
+An analytical issue presents here. Kepler showed that $M$ and  $E$, relating temporal phase to spatial phase, are related through Kepler's equation,
+\[
+    M = E - e \sin E.
+\]
+It is not solvable with analytical methods. Kepler himself stated in his Astronomia Nova upon reaching it that (translated) "It is enough for me to believe that I could not solve this \textit{a priori}, owing to the heterogeneity of the arc and the sine. Anyone who shows me my error and points the way will be for me the great Appollonius." (\cite[p.~450]{Kepler_1609}).

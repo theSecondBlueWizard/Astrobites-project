@@ -1,0 +1,31 @@
+\subsection{Mercury simulation}
+\label{appendix: mercury}
+\begin{minted}[breaklines]{python}
+import rebound
+import time
+    
+import reboundx
+from reboundx import constants
+    
+sim = rebound.simulation.Simulation()
+sim.integrator = "WHFAST"
+sim.dt = 1e-4
+    
+sim.add("Sun")
+sim.add("Mercury")
+    
+# rebx = reboundx.Extras(sim)
+# gr = rebx.load_force("gr")
+# rebx.add_force(gr)
+# gr.params["c"] = constants.C
+    
+sim.save_to_file("./mercury_wo_GR.bin", step = 100)
+sim.integrate(20) # Earth years * 2 * pi
+\end{minted}
+The code runs remarkably quickly, for no fault of my own. The method is simply that effective.
+
+The $dt$ value was chosen for nice visualisation, it really doesn't need to be that low, and every hundredth point isn't actually particularly important, its just there to be pretty, really. As Mercury has a period of about 88 days, and \cite{Rein_2015} recommend about 50 points per orbit, 
+
+The simulation doesn't need to save that often either, again, I wasn't sure if I was going to have time to make a pretty chart of the different. Saving less regularly is significantly more efficient, as files get \textit{significantly} smaller (from gigabytes to a megabyte). 
+
+The rest of the data generated for this paper is very similar to this script.

@@ -1,0 +1,46 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usetikzlibrary{angles, quotes}
+\usepackage{packages}
+\title{Astro-bites: Brief Overview of Modern Orbital Modelling Using REBOUND}
+
+\author{
+    \IEEEauthorblockN{[REDACTED]}
+    \IEEEauthorblockA{Department of Physics, NTNU\\
+    \textit{[REDACTED]@stud.ntnu.no}} 
+}
+\date{February 2025}
+\begin{document}
+
+\maketitle
+% Defining front matter settings (Norsk: innstillinger for forord m.m.)
+\frontmatter
+
+% Inserting table of contents
+% \tableofcontents
+
+% Inserting list of figures & list of tables
+% \listoffigures
+% \listoftables
+
+% Defining main matter settings (Norsk: innstillinger for hoveddelen av teksten)
+\mainmatter
+
+% Introduction explaining this LaTeX-template
+\import{./Sections/}{Introduction}
+
+% Example section added from an external tex-file, here located in ./Sections/
+\import{./Sections/}{Keplerian Elements}
+\import{./Sections/}{Numerical Methods}
+\import{./Sections/}{Mercury}
+\import{./Sections/}{Conclusion}
+ 
+% Printing bibliography
+\printbibliography[heading = bibintoc, title = Bibliography]    % 'bibintoc' inserts our bibliography into the table of contents
+
+% Inserting appendix with separate settings
+\addappendix
+\import{./Appendices/}{example_appendix}
+
+\end{document}
